@@ -1,0 +1,66 @@
+---
+- name: Install reflector
+  pacman: name=reflector state=present
+
+- name: Check if mirrorlist was updated
+  shell: grep -q reflector /etc/pacman.d/mirrorlist
+  register: output
+  ignore_errors: yes
+  changed_when: False
+  check_mode: no
+
+- name: Update the pacman mirrorlist
+  command: /usr/bin/reflector -l 20 -p http --sort rate --save /etc/pacman.d/mirrorlist
+  when: output.rc != 0
+
+- name: Upgrade System
+  pacman: update_cache=yes upgrade=yes
+
+- name: Install xorg server 
+  pacman: name={{ item }} state=present
+  with_items:
+    - xorg-server
+    - xf86-input-synaptics
+
+- name: Install networking components 
+  pacman: name={{ item }} state=present
+  with_items:
+    - networkmanager
+    - avahi
+
+- name: Install Plasma desktop
+  pacman: name={{ item }} state=present
+  with_items: 
+    - plasma-desktop
+    - plasma-workspace
+    - plasma-pa
+    - plasma-nm
+    - breeze
+    - breeze-gtk
+    - powerdevil
+    - systemsettings
+    - user-manager
+
+- name: Install KDE applications
+  pacman: name={{ item }} state=present
+  with_items:
+    - konsole
+    - ksysguard
+    - dolphin
+    - kdeconnect
+
+- name: Install browsers
+  pacman: name={{ item }} state=present
+  with_items:
+    - firefox
+    - chromium
+
+- name: Install fonts
+  pacman: name={{ item }} state=present
+  with_items:
+    - ttf-dejavu
+    - ttf-droid
+    - ttf-hack
+    - ttf-liberation
+    - noto-fonts
+...

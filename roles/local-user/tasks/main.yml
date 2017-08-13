@@ -1,0 +1,11 @@
+---
+- name: Ensure fontconfig directory exists
+  file:
+    path: '{{ font_conf_dir }}'
+    state: directory
+
+- name: Copying font configuration file
+  copy: 
+    src: fonts.conf
+    dest: '{{ font_conf_dir }}/fonts.conf'
+...

@@ -1,0 +1,8 @@
+---
+- hosts: all
+  roles:
+    - { role: pacman, become: yes } 
+    - { role: systemd, become: yes } 
+    - { role: config, become: yes } 
+    - local-user
+...

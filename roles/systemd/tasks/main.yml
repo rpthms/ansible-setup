@@ -1,0 +1,13 @@
+---
+- name: Enable NetworkManager
+  service: 
+    name: NetworkManager
+    enabled: yes
+    state: started
+
+- name: Enable thermald 
+  service:
+    name: thermald
+    enabled: yes
+    state: started
+...

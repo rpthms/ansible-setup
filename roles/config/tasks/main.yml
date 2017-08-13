@@ -1,0 +1,21 @@
+---
+- name: Copying pacman and makepkg configuration files
+  copy: 
+    src: '{{ item }}'
+    dest: '/etc/{{ item }}'
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - pacman.conf
+    - makepkg.conf
+
+- name: Copying mkinitcpio configuration file
+  copy:
+    src: mkinitcpio.conf
+    dest: /etc/mkinitcpio.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: update initramfs
+...
