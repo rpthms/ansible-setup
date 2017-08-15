@@ -1,11 +1,81 @@
 ---
+# Font configuration
 - name: Ensure fontconfig directory exists
   file:
     path: '{{ font_conf_dir }}'
     state: directory
+  tags: console
 
-- name: Copying font configuration file
+- name: Setting font configuration file
   copy: 
-    src: fonts.conf
+    src: '{{ files_dir }}/fonts.conf'
     dest: '{{ font_conf_dir }}/fonts.conf'
+  tags: console
+
+
+# ZSH configuration
+- name: Setting ZSH configuration files
+  file:
+    src: '{{ files_dir }}/{{ item }}'
+    dest: '{{ ansible_env.HOME }}/.{{ item | basename }}'
+    state: link
+  with_items:
+    - zsh/zshrc
+    - zsh/zprofile
+    - zsh
+  tags: console, zsh, xorg
+
+
+# Vim configuration
+- name: Setting Vim configuration files
+  file:
+    src: '{{ files_dir }}/vim'
+    dest: '{{ ansible_env.HOME }}/.vim'
+    state: link
+  tags: console, vim
+
+
+# MPD configuration
+- name: Ensuring MPD configuration directories exists
+  file:
+    path: '{{ item }}'
+    state: directory
+  with_items:
+    - '{{ mpd_conf_dir }}'
+    - '{{ ncmpcpp_conf_dir }}'
+  tags: console, mpd
+
+- name: Setting MPD configuration files
+  file:
+    src: '{{ files_dir }}/{{ item.src }}'
+    dest: '{{ item.dest }}'
+    state: link
+  with_items:
+    - { src: 'mpd/mpd.conf', dest: '{{ mpd_conf_dir }}/mpd.conf' }
+    - { src: 'mpd/ncmpcpp-config', dest: '{{ ncmpcpp_conf_dir }}/config' }
+  tags: console, mpd
+
+
+# Redshift configuration
+- name: Ensuring Redshift configuration directory exists
+  file:
+    path: '{{ conf_dir }}'
+    state: directory
+  tags: console, redshift
+
+- name: Setting Redshift configuration file
+  file:
+    src: '{{ files_dir }}/redshift.conf'
+    dest: '{{ conf_dir }}/redshift.conf'
+    state: link
+  tags: console,redshift
+
+
+# Xorg related configuration
+- name: Setting .xinitrc
+  file:
+    src: '{{ files_dir }}/xinitrc'
+    dest: '{{ ansible_env.HOME }}/.xinitrc'
+    state: link
+  tags: console, xorg
 ...

@@ -1,0 +1,112 @@
+"Setting up Pathogen
+execute pathogen#infect()
+
+"Setting leader key
+let mapleader = " "
+
+"Setting Line Numbers
+set number
+
+"Setting Syntax Colors
+syntax on
+
+"List and remove trailing whitespace
+nnoremap <Leader>ltw :match Error /\s\+$/<CR>
+nnoremap <Leader>rtw :%s/\s\+$//e<CR>
+
+"Setting Highlight Colors
+set hlsearch
+
+"Setting incremental search
+set incsearch
+
+"Wrapping searches
+set wrapscan
+
+"Show a dollar sign in change mode to mark the end
+set cpoptions+=$
+
+"Setting some helpful remaps
+inoremap kk <ESC>
+nnoremap XX ZQ
+
+"Setting window mappings
+nnoremap <Leader>h <C-w>h
+nnoremap <Leader>j <C-w>j
+nnoremap <Leader>k <C-w>k
+nnoremap <Leader>l <C-w>l
+nnoremap <Leader>o <C-w>o
+
+"Habit breaking, habit making
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
+"Insert space characters when tab is pressed
+"NOTE: After researching a little on this topic, I feel
+"      it would be better if you tabs instead of spaces
+"      as people have different preferences regarding their
+"      indentation size and they could set it as they want
+"      without changing the code base.
+"NOTE: No matter what happens, do not mix tabs and spaces in
+"      your source file, like you've done over here.
+"      Please!! I beg you!
+"      (Can't see here, because expandtab was on then!!)
+"set expandtab
+
+"Setting expandtab specifically for Python files
+autocmd Filetype python set expandtab
+autocmd Filetype yaml set expandtab
+
+"Number of space characters used when tab is pressed
+"Not really needed, since I'm only editing in INSERT mode
+"But if you really think about it.. tabs come when tabstop and softtabstop match,
+"so it's better to set it, else it might use spaces (check :help softtabstop)
+set tabstop=4
+
+"Number of space characters used for indentation
+set shiftwidth=8
+
+"Copy indentation from previous line
+set autoindent
+
+"Grouping space characters as a tab (in the INSERT mode!!), so
+"that backspace works correctly, and deletes 4 spaces at once,
+"instead of 1 space each time
+"Basically softtabs comes over hardtabs
+"Eg:- Let tabstop=4 and softtab=8
+"	  So, when you hit the tab key in the INSERT mode, vim will move
+"	  8 spaces at once, which seems like 1 whole tab(the SOFT tab, that is..),
+"	  but if you cat -A the file you will see 2 '^I' characters in the
+"	  file(2 whole HARD tabs!!)
+set softtabstop=4
+
+"Allows saving of files as sudo if you forget to open file as root
+cmap w!! w !sudo tee > /dev/null %
+
+"Setting a better color scheme.... So much better
+:color ron
+
+"Opening new split panes to the bottom right side
+set splitbelow
+set splitright
+
+"Allowing unsaved buffers to hide in background
+set hidden
+
+"Always show the status bar
+set laststatus=2
+
+"Setting the wildmenu completion
+set wildmenu
+
+"***PLUGIN SETTINGS***
+"Setting powerline fonts for status bar
+let g:airline_powerline_fonts=1
+
+"Enabling the upper powerline tab
+let g:airline#extensions#tabline#enabled = 1
+
+"Open TagBar on the left side
+let g:tagbar_left = 1

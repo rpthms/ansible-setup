@@ -21,6 +21,7 @@
   with_items:
     - xorg-server
     - xf86-input-synaptics
+    - redshift
 
 - name: Install networking components 
   pacman: name={{ item }} state=present

@@ -1,3 +1,9 @@
 ---
-font_conf_dir: '/home/ronnie/.config/fontconfig'
+# Variables required for the local-user role
+conf_dir: '{{ ansible_env.HOME }}/.config'
+font_conf_dir: '{{ ansible_env.HOME }}/.config/fontconfig'
+mpd_conf_dir: '{{ ansible_env.HOME }}/.config/mpd'
+ncmpcpp_conf_dir: '{{ ansible_env.HOME }}/.ncmpcpp'
+
+files_dir: '{{ role_path }}/files'
 ...

@@ -1,0 +1,142 @@
+# Zsh configuration for interactive shells
+setopt autocd correct
+
+#Key bindings
+bindkey -v
+bindkey kk vi-cmd-mode
+bindkey "^r" history-incremental-search-backward
+
+#Setting zsh configuration file directory
+ZCONFDIR=~/.zsh/
+
+#Setting history configurations
+HISTFILE=~/.zsh_history
+HISTSIZE=1000
+SAVEHIST=2000
+#histfindnodups doesn't seem to be working!
+setopt appendhistory histignoredups histexpiredupsfirst histfindnodups histreduceblanks histignorespace histnostore
+
+#Setting up color support for ls
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+fi
+
+#Setting the prompt
+autoload -U colors && colors
+source $ZCONFDIR/zsh-prompt.zsh
+
+#Setting completion support
+autoload -U compinit && compinit
+
+#Setting PATH
+#	typeset -U is used to ensure unique entries in the
+#	path array. The path array automatically fills up
+#	the PATH parameter.
+typeset -U path
+path=($path ~/.local/bin ~/Android/android-sdk/tools ~/Android/android-sdk/platform-tools)
+
+#Setting pkgfile's "command-not-found" handler
+if [[ -x /bin/pkgfile ]]; then
+	source /usr/share/doc/pkgfile/command-not-found.zsh
+fi
+
+#Aliases
+alias clear='clear;echo -e "\nCurrently logged in as $fg_bold[blue]$(whoami)$reset_color : \
+PWD=$fg_bold[cyan]$(pwd)$reset_color : TTY=$fg_bold[cyan]$(tty)$reset_color"'
+alias cls='clear'
+alias ls="ls --color=auto"
+alias syslog="journalctl"
+#alias up="sudo yum update"
+alias hibernate="systemctl hibernate"
+alias android-studio="~/Android/android-studio/bin/studio.sh"
+
+#Aliasing sudo to allow use with aliases!
+alias sudo="sudo "
+
+#I'm just too careless!!
+alias rm="rm -i"
+
+#Use this to enable and disable the touchpad
+alias et="xinput --enable 'SynPS/2 Synaptics TouchPad'"
+alias dt="xinput --disable 'SynPS/2 Synaptics TouchPad'"
+
+# Allowing CoW when copying files
+alias cp="cp --reflink=auto"
+
+#Setting the default libvirt URI
+export LIBVIRT_DEFAULT_URI=qemu:///system
+
+#Updating pacman mirrorlist
+alias mu="reflector --verbose -l 20 -p http --sort rate --save /etc/pacman.d/mirrorlist"
+
+#Raspberry Pi SSH Login
+alias rpilog="ssh ronnie@RonniePi.local"
+
+#Starting and shutting down home server
+alias slb="wol 00:26:18:8b:9f:ff"
+alias polb="ssh -t ronnie@lenobox.local 'sudo poweroff'"
+#Setting default editor
+export EDITOR=vim
+
+#Setting the build directory for AUR packages
+#export BUILDDIR=~/Builds/aur
+
+#Setting colored man pages
+man() {
+	env \
+	LESS_TERMCAP_mb=$'\e[1;31m' \
+	LESS_TERMCAP_md=$'\e[1;31m' \
+	LESS_TERMCAP_me=$'\e[0m' \
+	LESS_TERMCAP_se=$'\e[0m' \
+	LESS_TERMCAP_so=$'\e[1;44;33m' \
+	LESS_TERMCAP_ue=$'\e[0m' \
+	LESS_TERMCAP_us=$'\e[1;32m' \
+	man "$@"
+}
+
+#Setting up KDEDIRS for local installation tree
+ksetup() {
+	export KDEDIRS=/home/ronnie/Builds/kde:$(kde4-config --prefix);
+	kbuildsycoca4 &> /dev/null;
+}
+
+#Function to generated random strings
+# Pass length of string as argument
+genpasswd() {
+	local l=$1
+	[[ "$l" == "" ]] && l=16
+	tr -dc "A-Za-z0-9_!@#$%^&*()-+=" < /dev/urandom | head -c ${l} | xargs
+}
+
+#Changing Default DNS
+alias dc="sudo sh -c 'echo nameserver 8.8.8.8 > /etc/resolv.conf'"
+
+# Activating the input method editor when X launched using a Display Manager
+export GTK_IM_MODULE=ibus
+export QT_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+
+#Resizing the serial termainal
+rsz() {
+	if [[ -t 0 && $# -eq 0 ]];then
+		local IFS='[;' escape geometry x y
+		print -n '\e7\e[r\e[999;999H\e[6n\e8'
+		read -sd R escape geometry
+		x=${geometry##*;} y=${geometry%%;*}
+		if [[ ${COLUMNS} -eq ${x} && ${LINES} -eq ${y} ]];then
+			print "${TERM} ${x}x${y}"
+		else
+			print "${COLUMNS}x${LINES} -> ${x}x${y}"
+			stty cols ${x} rows ${y}
+		fi
+	else
+		[[ -n ${commands[repo-elephant]} ]] && repo-elephant || print 'Usage: rsz'  ## Easter egg here :)
+	fi
+}
+
+#Resizing the serial terminal
+tty | grep -q "ttyS"
+if [[ $? -eq 0 ]]; then
+	rsz
+	export TERM=xterm-256color
+fi
