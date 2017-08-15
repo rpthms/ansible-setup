@@ -1,13 +1,33 @@
 ---
+- name: Ensuring getty for tty1 is enabled
+  systemd:
+    name: getty@tty1.service
+    enabled: yes
+
+- name: Ensuring getty configuration directory exists
+  file:
+    path: /etc/systemd/system/getty@tty1.service.d
+    state: directory
+
+- name: Enable autologin for {{ ansible_user_id }}
+  template:
+    src: getty-override.j2
+    dest: /etc/systemd/system/getty@tty1.service.d/override.conf
+    owner: root
+    group: root
+
 - name: Enable NetworkManager
-  service: 
+  systemd: 
     name: NetworkManager
     enabled: yes
     state: started
 
-- name: Enable thermald 
-  service:
-    name: thermald
+- name: Enable thermald and tlp
+  systemd:
+    name: '{{ item }}' 
     enabled: yes
-    state: started
+  with_items:
+    - thermald
+    - tlp
+    - tlp-sleep
 ...

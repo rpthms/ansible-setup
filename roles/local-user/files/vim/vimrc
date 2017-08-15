@@ -1,5 +1,5 @@
 "Setting up Pathogen
-execute pathogen#infect()
+"execute pathogen#infect()
 
 "Setting leader key
 let mapleader = " "
@@ -103,10 +103,10 @@ set wildmenu
 
 "***PLUGIN SETTINGS***
 "Setting powerline fonts for status bar
-let g:airline_powerline_fonts=1
+"let g:airline_powerline_fonts=1
 
 "Enabling the upper powerline tab
-let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#enabled = 1
 
 "Open TagBar on the left side
-let g:tagbar_left = 1
+"let g:tagbar_left = 1

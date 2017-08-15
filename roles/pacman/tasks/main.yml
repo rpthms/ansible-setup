@@ -65,4 +65,10 @@
     - ttf-hack
     - ttf-liberation
     - noto-fonts
+
+- name: Install power-saving tools
+  pacman: name={{ item }} state=present
+  with_items:
+    - thermald
+    - tlp
 ...
