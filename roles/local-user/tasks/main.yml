@@ -1,6 +1,6 @@
 ---
 # Font configuration
-- name: Ensure fontconfig directory exists
+- name: Ensuring fontconfig directory exists
   file:
     path: '{{ font_conf_dir }}'
     state: directory

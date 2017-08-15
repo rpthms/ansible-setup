@@ -1,74 +1,81 @@
 ---
-- name: Install reflector
+- name: Installing reflector
   pacman: name=reflector state=present
 
-- name: Check if mirrorlist was updated
+- name: Checking if mirrorlist was updated
   shell: grep -q reflector /etc/pacman.d/mirrorlist
   register: output
   ignore_errors: yes
   changed_when: False
   check_mode: no
 
-- name: Update the pacman mirrorlist
+- name: Updating the pacman mirrorlist
   command: /usr/bin/reflector -l 20 -p http --sort rate --save /etc/pacman.d/mirrorlist
   when: output.rc != 0
 
-- name: Upgrade System
+- name: Upgrading System
   pacman: update_cache=yes upgrade=yes
 
-- name: Install xorg server 
-  pacman: name={{ item }} state=present
-  with_items:
-    - xorg-server
-    - xorg-xinit
-    - xf86-input-synaptics
-    - redshift
+- name: Installing xorg server 
+  pacman:
+    name:
+      - xorg-server
+      - xorg-xinit
+      - xf86-input-synaptics
+      - redshift
+    state: present
 
-- name: Install networking components 
-  pacman: name={{ item }} state=present
-  with_items:
-    - networkmanager
-    - avahi
+- name: Installing networking components 
+  pacman:
+    name:
+      - networkmanager
+      - avahi
+    state: present
 
-- name: Install Plasma desktop
-  pacman: name={{ item }} state=present
-  with_items: 
-    - plasma-desktop
-    - plasma-workspace
-    - plasma-pa
-    - plasma-nm
-    - breeze
-    - breeze-gtk
-    - powerdevil
-    - systemsettings
-    - user-manager
+- name: Installing Plasma desktop
+  pacman:
+    name:
+      - plasma-desktop
+      - plasma-workspace
+      - plasma-pa
+      - plasma-nm
+      - breeze
+      - breeze-gtk
+      - powerdevil
+      - systemsettings
+      - user-manager
+    state: present
 
-- name: Install KDE applications
-  pacman: name={{ item }} state=present
-  with_items:
-    - konsole
-    - ksysguard
-    - dolphin
-    - kdeconnect
+- name: Installing KDE applications
+  pacman:
+    name:
+      - konsole
+      - ksysguard
+      - dolphin
+      - kdeconnect
+    state: present
 
-- name: Install browsers
-  pacman: name={{ item }} state=present
-  with_items:
-    - firefox
-    - chromium
+- name: Installing browsers
+  pacman:
+    name:
+      - firefox
+      - chromium
+    state: present
 
-- name: Install fonts
-  pacman: name={{ item }} state=present
-  with_items:
-    - ttf-dejavu
-    - ttf-droid
-    - ttf-hack
-    - ttf-liberation
-    - noto-fonts
+- name: Installing fonts
+  pacman:
+    name:
+      - ttf-dejavu
+      - ttf-droid
+      - ttf-hack
+      - ttf-liberation
+      - noto-fonts
+    state: present
 
-- name: Install power-saving tools
-  pacman: name={{ item }} state=present
-  with_items:
-    - thermald
-    - tlp
+- name: Installing power-saving tools
+  pacman:
+    name:
+      - thermald
+      - tlp
+    state: present
 ...

@@ -9,20 +9,20 @@
     path: /etc/systemd/system/getty@tty1.service.d
     state: directory
 
-- name: Enable autologin for {{ ansible_user_id }}
+- name: Enabling autologin for {{ ansible_user_id }}
   template:
     src: getty-override.j2
     dest: /etc/systemd/system/getty@tty1.service.d/override.conf
     owner: root
     group: root
 
-- name: Enable NetworkManager
+- name: Enabling NetworkManager
   systemd: 
     name: NetworkManager
     enabled: yes
     state: started
 
-- name: Enable thermald and tlp
+- name: Enabling thermald and tlp
   systemd:
     name: '{{ item }}' 
     enabled: yes
