@@ -1,4 +1,18 @@
 ---
+- name: Configuring systemd
+  copy:
+    src: system.conf.d
+    dest: /etc/systemd
+    owner: root
+    group: root
+
+- name: Configuring journald
+  copy:
+    src: journald.conf.d
+    dest: /etc/systemd
+    owner: root
+    group: root
+
 - name: Ensuring getty for tty1 is enabled
   systemd:
     name: getty@tty1.service
