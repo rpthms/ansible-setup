@@ -17,24 +17,22 @@
   pacman: update_cache=yes upgrade=yes
 
 - name: Installing xorg server 
-  pacman:
-    name:
+  pacman: name={{ item }} state=present
+  with_items:
       - xorg-server
       - xorg-xinit
       - xf86-input-synaptics
       - redshift
-    state: present
 
 - name: Installing networking components 
-  pacman:
-    name:
+  pacman: name={{ item }} state=present
+  with_items:
       - networkmanager
       - avahi
-    state: present
 
 - name: Installing Plasma desktop
-  pacman:
-    name:
+  pacman: name={{ item }} state=present
+  with_items:
       - plasma-desktop
       - plasma-workspace
       - plasma-pa
@@ -44,38 +42,33 @@
       - powerdevil
       - systemsettings
       - user-manager
-    state: present
 
 - name: Installing KDE applications
-  pacman:
-    name:
+  pacman: name={{ item }} state=present
+  with_items:
       - konsole
       - ksysguard
       - dolphin
       - kdeconnect
-    state: present
 
 - name: Installing browsers
-  pacman:
-    name:
+  pacman: name={{ item }} state=present
+  with_items:
       - firefox
       - chromium
-    state: present
 
 - name: Installing fonts
-  pacman:
-    name:
+  pacman: name={{ item }} state=present
+  with_items:
       - ttf-dejavu
       - ttf-droid
       - ttf-hack
       - ttf-liberation
       - noto-fonts
-    state: present
 
 - name: Installing power-saving tools
-  pacman:
-    name:
+  pacman: name={{ item }} state=present
+  with_items:
       - thermald
       - tlp
-    state: present
 ...
