@@ -3,7 +3,7 @@
   pacman: name=reflector state=present
 
 - name: Checking if mirrorlist was updated
-  shell: grep -q reflector /etc/pacman.d/mirrorlist
+  command: grep -q reflector /etc/pacman.d/mirrorlist
   register: output
   ignore_errors: yes
   changed_when: False
