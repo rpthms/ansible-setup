@@ -71,4 +71,7 @@
   with_items:
       - thermald
       - tlp
+
+- name: Installing KeePassXC
+  pacman: name=keepassxc state=present
 ...
