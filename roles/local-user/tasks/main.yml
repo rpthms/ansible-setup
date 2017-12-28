@@ -78,4 +78,12 @@
     dest: '{{ ansible_env.HOME }}/.xinitrc'
     state: link
   tags: console, xorg
+
+# SSH configuration
+- name: Setting .ssh/config
+  file:
+    src: '{{ files_dir }}/ssh/config'
+    dest: '{{ ansible_env.HOME }}/.ssh/config'
+    state: link
+  tags: console, ssh
 ...
