@@ -10,7 +10,7 @@
   check_mode: no
 
 - name: Updating the pacman mirrorlist
-  command: /usr/bin/reflector -l 20 -p http --sort rate --save /etc/pacman.d/mirrorlist
+  command: /usr/bin/reflector -l 20 -p http --sort rate --save /etc/pacman.d/mirrorlist -c IN
   when: output.rc != 0
 
 - name: Upgrading System
