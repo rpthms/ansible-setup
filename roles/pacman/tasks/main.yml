@@ -42,6 +42,7 @@
       - powerdevil
       - systemsettings
       - user-manager
+      - kde-gtk-config
 
 - name: Installing KDE applications
   pacman: name={{ item }} state=present
@@ -71,6 +72,7 @@
   with_items:
       - thermald
       - tlp
+      - x86_energy_perf_policy
 
 - name: Installing KeePassXC
   pacman: name=keepassxc state=present
