@@ -80,6 +80,10 @@
   tags: console, xorg
 
 # SSH configuration
+- name: Ensuring SSH configuration directory exists
+  file: path='{{ ansible_env.HOME }}/.ssh' state=directory
+  tags: console, ssh
+
 - name: Setting .ssh/config
   file:
     src: '{{ files_dir }}/ssh/config'
