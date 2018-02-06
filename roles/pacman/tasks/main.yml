@@ -43,8 +43,6 @@
       - systemsettings
       - user-manager
       - kde-gtk-config
-      - gwenview
-      - spectacle
 
 - name: Installing KDE applications
   pacman: name={{ item }} state=present
@@ -53,6 +51,8 @@
       - ksysguard
       - dolphin
       - kdeconnect
+      - gwenview
+      - spectacle
 
 - name: Installing browsers
   pacman: name={{ item }} state=present
