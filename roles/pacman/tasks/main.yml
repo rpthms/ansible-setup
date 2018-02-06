@@ -43,6 +43,8 @@
       - systemsettings
       - user-manager
       - kde-gtk-config
+      - gwenview
+      - spektacle
 
 - name: Installing KDE applications
   pacman: name={{ item }} state=present
