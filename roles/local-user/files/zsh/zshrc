@@ -14,7 +14,10 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000
 SAVEHIST=2000
 #histfindnodups doesn't seem to be working!
-setopt appendhistory histignoredups histexpiredupsfirst histfindnodups histreduceblanks histignorespace histnostore
+setopt appendhistory incappendhistory histignoredups histexpiredupsfirst histfindnodups histreduceblanks histignorespace histnostore
+
+#Don't want to overwrite files accidentally..
+setopt noclobber
 
 #Setting up color support for ls
 if [ -x /usr/bin/dircolors ]; then
@@ -33,7 +36,7 @@ autoload -U compinit && compinit
 #	path array. The path array automatically fills up
 #	the PATH parameter.
 typeset -U path
-path=($path ~/.local/bin ~/Android/android-sdk/tools ~/Android/android-sdk/platform-tools)
+path=($path ~/.local/bin)
 
 #Setting pkgfile's "command-not-found" handler
 if [[ -x /bin/pkgfile ]]; then
@@ -46,7 +49,7 @@ PWD=$fg_bold[cyan]$(pwd)$reset_color : TTY=$fg_bold[cyan]$(tty)$reset_color"'
 alias cls='clear'
 alias ls="ls --color=auto"
 alias syslog="journalctl"
-#alias up="sudo yum update"
+alias up="sudo pacman -Syu"
 alias hibernate="systemctl hibernate"
 alias android-studio="~/Android/android-studio/bin/studio.sh"
 
@@ -73,8 +76,9 @@ alias mu="reflector --verbose -l 20 -p http --sort rate --save /etc/pacman.d/mir
 alias rpilog="ssh ronnie@RonniePi.local"
 
 #Starting and shutting down home server
-alias slb="wol 00:26:18:8b:9f:ff"
-alias polb="ssh -t ronnie@lenobox.local 'sudo poweroff'"
+#alias slb="wol 00:26:18:8b:9f:ff"
+#alias polb="ssh -t ronnie@lenobox.local 'sudo poweroff'"
+
 #Setting default editor
 export EDITOR=vim
 
@@ -95,10 +99,10 @@ man() {
 }
 
 #Setting up KDEDIRS for local installation tree
-ksetup() {
-	export KDEDIRS=/home/ronnie/Builds/kde:$(kde4-config --prefix);
-	kbuildsycoca4 &> /dev/null;
-}
+#ksetup() {
+#	export KDEDIRS=/home/ronnie/Builds/kde:$(kde4-config --prefix);
+#	kbuildsycoca4 &> /dev/null;
+#}
 
 #Function to generated random strings
 # Pass length of string as argument
@@ -112,9 +116,9 @@ genpasswd() {
 alias dc="sudo sh -c 'echo nameserver 8.8.8.8 > /etc/resolv.conf'"
 
 # Activating the input method editor when X launched using a Display Manager
-export GTK_IM_MODULE=ibus
-export QT_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
+#export GTK_IM_MODULE=ibus
+#export QT_IM_MODULE=ibus
+#export XMODIFIERS=@im=ibus
 
 #Resizing the serial termainal
 rsz() {
