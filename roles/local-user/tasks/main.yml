@@ -81,7 +81,9 @@
 
 # SSH configuration
 - name: Ensuring SSH configuration directory exists
-  file: path='{{ ansible_env.HOME }}/.ssh/sockets' state=directory
+  file: 
+    path: '{{ ansible_env.HOME }}/.ssh/sockets'
+    state: directory
   tags: console, ssh
 
 - name: Setting .ssh/config
@@ -90,4 +92,34 @@
     dest: '{{ ansible_env.HOME }}/.ssh/config'
     state: link
   tags: console, ssh
+
+# Konsole configuration
+- name: Ensuring Konsole config directories exists
+  block:
+    - name: Ensuring konsolerc directory exists
+      file: 
+        path: '{{ conf_dir }}'
+        state: directory
+    - name: Ensuring konsole profile directory exists
+      file:
+        path: '{{ konsole_dir }}'
+        state: directory
+  tags: console, konsole
+
+- name: Setting Konsole configuration files
+  block:
+    - name: Setting konsolerc
+      file:
+        src: '{{ files_dir }}/konsole/konsolerc'
+        dest: '{{ conf_dir }}/konsolerc'
+        state: link
+    - name: Setting konsole profile
+      file:
+        src: '{{ files_dir }}/konsole/{{ item }}'
+        dest: '{{ konsole_dir }}/{{ item }}'
+        state: link
+      with_items:
+        - Profile-Default.profile
+        - Linux.colorscheme
+  tags: console, konsole
 ...

@@ -4,6 +4,7 @@ conf_dir: '{{ ansible_env.HOME }}/.config'
 font_conf_dir: '{{ ansible_env.HOME }}/.config/fontconfig'
 mpd_conf_dir: '{{ ansible_env.HOME }}/.config/mpd'
 ncmpcpp_conf_dir: '{{ ansible_env.HOME }}/.ncmpcpp'
+konsole_dir: '{{ ansible_env.HOME }}/.local/share/konsole'
 
 files_dir: '{{ role_path }}/files'
 ...
