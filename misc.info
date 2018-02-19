@@ -1,0 +1,4 @@
+Stuff I couldn't figure out a way to auto-configure:
+
+1) Force Plasma Fonts DPI to 110. Normal fonts at size 11. Small fonts at size 10.
+2) Use the same size for GTK fonts as well.
