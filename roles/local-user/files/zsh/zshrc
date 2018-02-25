@@ -1,3 +1,6 @@
+# Don't mess with my terminal!
+ttyctl -f
+
 # Zsh configuration for interactive shells
 setopt autocd correct
 
