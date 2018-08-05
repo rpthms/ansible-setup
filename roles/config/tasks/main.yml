@@ -10,12 +10,40 @@
     - pacman.conf
     - makepkg.conf
 
-- name: Copying mkinitcpio configuration file
-  copy:
-    src: mkinitcpio.conf
-    dest: /etc/mkinitcpio.conf
-    owner: root
-    group: root
-    mode: 0644
-  notify: update initramfs
+- name: Creating Linux LTS boot config
+  block:
+    - name: Copying arch-lts.conf to the boot directory
+      copy:
+        src: arch-lts.conf
+        dest: /boot/loader/entries/arch-lts.conf
+        owner: root
+        group: root
+        mode: 0644
+    - name: Setting the proper UUID in arch-lts.conf
+      shell: |
+        $LUKS_UUID = blkid -o export -s UUIS -s TYPE | grep -B 1 -i luks | grep -i uuid
+        sed -i "s/{insert_uuid}/$LUKS_UUID/" /boot/loader/entries/arch-lts.conf
+
+- name: Copying mkinitcpio configuration files
+  block:
+    - name: Copying mkinitcpio preset files
+      copy:
+        src: '{{ item }}'
+        dest: '/etc/mkinitcpio.d/{{ item }}'
+        owner: root
+        group: root
+        mode: 0644
+      with_items:
+        - linux.preset
+        - linux-lts.preset
+    - name: Copying mkinitcpio configuration file
+      copy:
+        src: mkinitcpio.conf
+        dest: /etc/mkinitcpio.conf
+        owner: root
+        group: root
+        mode: 0644
+      notify:
+        - update initramfs
+        - update lts initramfs
 ...

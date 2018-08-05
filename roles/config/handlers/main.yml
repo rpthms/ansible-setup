@@ -1,4 +1,7 @@
 ---
 - name: update initramfs
   command: /usr/bin/mkinitcpio -p linux
+
+- name: update lts initramfs
+  command: /usr/bin/mkinitcpio -p linux-lts
 ...
