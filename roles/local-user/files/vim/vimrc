@@ -37,6 +37,9 @@ nnoremap <Leader>k <C-w>k
 nnoremap <Leader>l <C-w>l
 nnoremap <Leader>o <C-w>o
 
+"Change window positions left/right
+nnoremap <Leader>r <C-w>r
+
 "Habit breaking, habit making
 noremap <Up> <NOP>
 noremap <Down> <NOP>
@@ -100,6 +103,13 @@ set laststatus=2
 
 "Setting the wildmenu completion
 set wildmenu
+
+"Highlight characters exceeding the specified width for LaTeX files
+autocmd BufEnter *.tex highlight OverLength ctermbg=darkgrey guibg=#592929
+autocmd BufEnter *.tex match OverLength /\%80v.*/
+
+"Set spell check for LaTeX files
+autocmd FileType tex set spell spelllang=en_gb
 
 "***PLUGIN SETTINGS***
 "Setting powerline fonts for status bar
