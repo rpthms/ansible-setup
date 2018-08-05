@@ -21,7 +21,7 @@
         mode: 0644
     - name: Setting the proper UUID in arch-lts.conf
       shell: |
-        $LUKS_UUID = blkid -o export -s UUIS -s TYPE | grep -B 1 -i luks | grep -i uuid
+        LUKS_UUID=`blkid -o export -s UUID -s TYPE | grep -B 1 -i luks | grep -i uuid`
         sed -i "s/{insert_uuid}/$LUKS_UUID/" /boot/loader/entries/arch-lts.conf
 
 - name: Copying mkinitcpio configuration files
