@@ -1,12 +1,22 @@
-# Don't mess with my terminal!
+#Don't mess with my terminal!
 ttyctl -f
 
-# Zsh configuration for interactive shells
+#Zsh configuration for interactive shells
 setopt autocd correct
 
 #Key bindings
 bindkey -v
 bindkey kk vi-cmd-mode
+
+#Search history based on existing shell command
+#by using the up and down arrows
+#Place the cursor at the end after doing a history search
+autoload -U history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^[[A" history-beginning-search-backward-end
+bindkey "^[[B" history-beginning-search-forward-end
+#Incremental history search
 bindkey "^r" history-incremental-search-backward
 
 #Setting zsh configuration file directory
@@ -34,6 +44,9 @@ source $ZCONFDIR/zsh-prompt.zsh
 #Setting completion support
 autoload -U compinit && compinit
 
+#Persistent rehash (find new binaries immediately after installing packages)
+zstyle ':completion:*' rehash true
+
 #Setting PATH
 #	typeset -U is used to ensure unique entries in the
 #	path array. The path array automatically fills up
@@ -54,7 +67,6 @@ alias ls="ls --color=auto"
 alias syslog="journalctl"
 alias up="sudo pacman -Syu"
 alias hibernate="systemctl hibernate"
-alias android-studio="~/Android/android-studio/bin/studio.sh"
 
 #Aliasing sudo to allow use with aliases!
 alias sudo="sudo "
