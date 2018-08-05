@@ -4,7 +4,7 @@ Configuration management for my systems using Ansible
 Currently only supports Arch Linux
 
 # Instructions
-This playbook is only meant to be run on the localhost, as I'm just symlinking the home directory config files to their respective locations.
+This playbook is **only meant to be run as the local user on the localhost AFTER INSTALLATION**, as I'm just symlinking the home directory config files to their respective locations.
 So to do that, you need to edit your inventory file (/etc/ansible/hosts) and add the following:
 
 `localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python2`
