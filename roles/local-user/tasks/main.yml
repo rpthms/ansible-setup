@@ -122,4 +122,35 @@
         - Profile-Default.profile
         - Linux.colorscheme
   tags: console, konsole
+
+# Chromium configuration
+- name: Ensuring Chromium configuration directory exists
+  file:
+    path: '{{ conf_dir }}'
+    state: directory
+  tags: console, chromium
+
+- name: Setting Chromium configuration file
+  file:
+    src: '{{ files_dir }}/chromium-flags.conf'
+    dest: '{{ conf_dir }}/chromium-flags.conf'
+    state: link
+  tags: console, chromium
+
+# Setting up autostart applications
+- name: Ensuring the autostart directory exists
+  file:
+    path: '{{ conf_dir }}/autostart'
+    state: directory
+  tags: console, autostart
+
+- name: Configuring the autostart applications
+  file:
+    src: '{{ item }}'
+    dest: '{{ conf_dir }}/autostart/{{ item | basename }}'
+    state: link
+  with_items:
+    - /usr/share/applications/firefox.desktop
+    - /usr/share/applications/org.kde.konsole.desktop
+  tags: console, autostart
 ...
