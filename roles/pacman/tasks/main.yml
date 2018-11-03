@@ -24,11 +24,8 @@
       - xf86-input-synaptics
       - redshift
 
-- name: Installing networking components 
-  pacman: name={{ item }} state=present
-  with_items:
-      - networkmanager
-      - avahi
+- name: Installing NetworkManager
+  pacman: name=networkmanager state=present
 
 - name: Installing Plasma desktop
   pacman: name={{ item }} state=present
