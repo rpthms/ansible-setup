@@ -26,7 +26,8 @@
 
 - name: Installing Plasma desktop
   pacman:
-    name: [plasma-desktop, plasma-workspace, plasma-wayland-session, plasma-pa, plasma-nm, breeze, breeze-gtk, powerdevil, systemsettings, user-manager, kde-gtk-config]
+    name: [plasma-desktop, plasma-workspace, plasma-wayland-session, plasma-pa, plasma-nm,
+           breeze, breeze-gtk, powerdevil, systemsettings, user-manager, kde-gtk-config]
     state: present
 
 - name: Installing KDE applications
