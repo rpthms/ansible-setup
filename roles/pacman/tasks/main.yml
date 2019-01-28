@@ -1,9 +1,9 @@
 ---
 - name: Upgrading System
-  pacman: update_cache=yes upgrade=yes
+  pacman: {update_cache: yes, upgrade: yes}
 
 - name: Installing reflector
-  pacman: name=reflector state=present
+  pacman: {name: reflector, state: present}
 
 - name: Checking if mirrorlist was updated
   command: grep -q reflector /etc/pacman.d/mirrorlist
@@ -16,67 +16,42 @@
   command: /usr/bin/reflector -l 20 -p http --sort rate --save /etc/pacman.d/mirrorlist -c CA
   when: output.rc != 0
 
-- name: Installing xorg server 
-  pacman: name={{ item }} state=present
-  with_items:
-      - xorg-server
-      - xorg-xinit
-      - xf86-input-synaptics
-      - redshift
+- name: Installing xorg server
+  pacman:
+    name: [xorg-server, xorg-xinit, xf86-input-synaptics, redshift]
+    state: present
 
 - name: Installing NetworkManager
-  pacman: name=networkmanager state=present
+  pacman: {name: networkmanager, state: present}
 
 - name: Installing Plasma desktop
-  pacman: name={{ item }} state=present
-  with_items:
-      - plasma-desktop
-      - plasma-workspace
-      - plasma-wayland-session
-      - plasma-pa
-      - plasma-nm
-      - breeze
-      - breeze-gtk
-      - powerdevil
-      - systemsettings
-      - user-manager
-      - kde-gtk-config
+  pacman:
+    name: [plasma-desktop, plasma-workspace, plasma-wayland-session, plasma-pa, plasma-nm, breeze, breeze-gtk, powerdevil, systemsettings, user-manager, kde-gtk-config]
+    state: present
 
 - name: Installing KDE applications
-  pacman: name={{ item }} state=present
-  with_items:
-      - konsole
-      - ksysguard
-      - dolphin
-      - kdeconnect
-      - gwenview
-      - spectacle
+  pacman:
+    name: [konsole, ksysguard, dolphin, kdeconnect, gwenview, spectacle]
+    state: present
 
 - name: Installing browsers
-  pacman: name={{ item }} state=present
-  with_items:
-      - firefox
-      - chromium
+  pacman:
+    name: [firefox, chromium]
+    state: present
 
 - name: Installing fonts
-  pacman: name={{ item }} state=present
-  with_items:
-      - ttf-dejavu
-      - ttf-droid
-      - ttf-hack
-      - ttf-liberation
-      - noto-fonts
+  pacman:
+    name: [ttf-dejavu, ttf-droid, ttf-hack, ttf-liberation, noto-fonts]
+    state: present
 
 - name: Installing power-saving tools
-  pacman: name={{ item }} state=present
-  with_items:
-      - thermald
-      - tlp
-      - x86_energy_perf_policy
+  pacman:
+    name: [thermald, tlp, x86_energy_perf_policy]
+    state: present
 
 - name: Installing KeePassXC
-  pacman: name=keepassxc state=present
+  pacman: {name: keepassxc, state: present}
 
 - name: Installing Linux LTS kernel
-  pacman: name=linux-lts state=present
+  pacman: {name: linux-lts, state: present}
 ...
