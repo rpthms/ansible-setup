@@ -4,13 +4,11 @@
   file:
     path: '{{ font_conf_dir }}'
     state: directory
-  tags: console
 
 - name: Setting font configuration file
   copy: 
     src: '{{ files_dir }}/fonts.conf'
     dest: '{{ font_conf_dir }}/fonts.conf'
-  tags: console
 
 
 # ZSH configuration
@@ -23,7 +21,7 @@
     - zsh/zshrc
     - zsh/zprofile
     - zsh
-  tags: console, zsh, xorg
+  tags: zsh, xorg
 
 
 # Vim configuration
@@ -32,7 +30,7 @@
     src: '{{ files_dir }}/vim'
     dest: '{{ ansible_env.HOME }}/.vim'
     state: link
-  tags: console, vim
+  tags: vim
 
 
 # MPD configuration
@@ -43,7 +41,7 @@
   with_items:
     - '{{ mpd_conf_dir }}'
     - '{{ ncmpcpp_conf_dir }}'
-  tags: console, mpd
+  tags: mpd
 
 - name: Setting MPD configuration files
   file:
@@ -53,7 +51,7 @@
   with_items:
     - { src: 'mpd/mpd.conf', dest: '{{ mpd_conf_dir }}/mpd.conf' }
     - { src: 'mpd/ncmpcpp-config', dest: '{{ ncmpcpp_conf_dir }}/config' }
-  tags: console, mpd
+  tags: mpd
 
 
 # Redshift configuration
@@ -61,14 +59,14 @@
   file:
     path: '{{ conf_dir }}'
     state: directory
-  tags: console, redshift
+  tags: redshift
 
 - name: Setting Redshift configuration file
   file:
     src: '{{ files_dir }}/redshift.conf'
     dest: '{{ conf_dir }}/redshift.conf'
     state: link
-  tags: console,redshift
+  tags: redshift
 
 
 # Xorg related configuration
@@ -77,21 +75,21 @@
     src: '{{ files_dir }}/xinitrc'
     dest: '{{ ansible_env.HOME }}/.xinitrc'
     state: link
-  tags: console, xorg
+  tags: xorg
 
 # SSH configuration
 - name: Ensuring SSH configuration directory exists
   file: 
     path: '{{ ansible_env.HOME }}/.ssh/sockets'
     state: directory
-  tags: console, ssh
+  tags: ssh
 
 - name: Setting .ssh/config
   file:
     src: '{{ files_dir }}/ssh/config'
     dest: '{{ ansible_env.HOME }}/.ssh/config'
     state: link
-  tags: console, ssh
+  tags: ssh
 
 # Konsole configuration
 - name: Ensuring Konsole config directories exists
@@ -104,7 +102,7 @@
       file:
         path: '{{ konsole_dir }}'
         state: directory
-  tags: console, konsole
+  tags: konsole
 
 - name: Setting Konsole configuration files
   block:
@@ -121,28 +119,28 @@
       with_items:
         - Profile-Default.profile
         - Linux.colorscheme
-  tags: console, konsole
+  tags: konsole
 
 # Chromium configuration
 - name: Ensuring Chromium configuration directory exists
   file:
     path: '{{ conf_dir }}'
     state: directory
-  tags: console, chromium
+  tags: chromium
 
 - name: Setting Chromium configuration file
   file:
     src: '{{ files_dir }}/chromium-flags.conf'
     dest: '{{ conf_dir }}/chromium-flags.conf'
     state: link
-  tags: console, chromium
+  tags: chromium
 
 # Setting up autostart applications
 - name: Ensuring the autostart directory exists
   file:
     path: '{{ conf_dir }}/autostart'
     state: directory
-  tags: console, autostart
+  tags: autostart
 
 - name: Configuring the autostart applications
   file:
@@ -152,5 +150,5 @@
   with_items:
     - /usr/share/applications/firefox.desktop
     - /usr/share/applications/org.kde.konsole.desktop
-  tags: console, autostart
+  tags: autostart
 ...

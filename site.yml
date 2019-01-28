@@ -4,5 +4,5 @@
     - { role: pacman, become: yes } 
     - { role: systemd, become: yes } 
     - { role: config, become: yes } 
-    - local-user
+    - { role: local-user, tags: console }
 ...
