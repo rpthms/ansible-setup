@@ -68,6 +68,9 @@ alias syslog="journalctl"
 alias up="sudo pacman -Syu"
 alias hibernate="systemctl hibernate"
 
+#Apparently ip has colors!!
+alias ip="ip -color"
+
 #Aliasing sudo to allow use with aliases!
 alias sudo="sudo "
 
@@ -85,10 +88,13 @@ alias cp="cp --reflink=auto"
 export LIBVIRT_DEFAULT_URI=qemu:///system
 
 #Updating pacman mirrorlist
-alias mu="reflector --verbose -l 20 -p http --sort rate --save /etc/pacman.d/mirrorlist"
+alias mu="reflector --verbose -l 20 -p http --sort rate --save /etc/pacman.d/mirrorlist -c CA"
+
+#Activate OpenVPN
+alias ov="cd ~/.openvpn && sudo openvpn client.conf && cd -"
 
 #Raspberry Pi SSH Login
-alias rpilog="ssh ronnie@RonniePi.local"
+#alias rpilog="ssh ronnie@RonniePi.local"
 
 #Starting and shutting down home server
 #alias slb="wol 00:26:18:8b:9f:ff"
@@ -128,7 +134,7 @@ genpasswd() {
 }
 
 #Changing Default DNS
-alias dc="sudo sh -c 'echo nameserver 8.8.8.8 > /etc/resolv.conf'"
+#alias dc="sudo sh -c 'echo nameserver 8.8.8.8 > /etc/resolv.conf'"
 
 # Activating the input method editor when X launched using a Display Manager
 #export GTK_IM_MODULE=ibus
@@ -136,26 +142,31 @@ alias dc="sudo sh -c 'echo nameserver 8.8.8.8 > /etc/resolv.conf'"
 #export XMODIFIERS=@im=ibus
 
 #Resizing the serial termainal
-rsz() {
-	if [[ -t 0 && $# -eq 0 ]];then
-		local IFS='[;' escape geometry x y
-		print -n '\e7\e[r\e[999;999H\e[6n\e8'
-		read -sd R escape geometry
-		x=${geometry##*;} y=${geometry%%;*}
-		if [[ ${COLUMNS} -eq ${x} && ${LINES} -eq ${y} ]];then
-			print "${TERM} ${x}x${y}"
-		else
-			print "${COLUMNS}x${LINES} -> ${x}x${y}"
-			stty cols ${x} rows ${y}
-		fi
-	else
-		[[ -n ${commands[repo-elephant]} ]] && repo-elephant || print 'Usage: rsz'  ## Easter egg here :)
-	fi
-}
+#rsz() {
+#	if [[ -t 0 && $# -eq 0 ]];then
+#		local IFS='[;' escape geometry x y
+#		print -n '\e7\e[r\e[999;999H\e[6n\e8'
+#		read -sd R escape geometry
+#		x=${geometry##*;} y=${geometry%%;*}
+#		if [[ ${COLUMNS} -eq ${x} && ${LINES} -eq ${y} ]];then
+#			print "${TERM} ${x}x${y}"
+#		else
+#			print "${COLUMNS}x${LINES} -> ${x}x${y}"
+#			stty cols ${x} rows ${y}
+#		fi
+#	else
+#		[[ -n ${commands[repo-elephant]} ]] && repo-elephant || print 'Usage: rsz'  ## Easter egg here :)
+#	fi
+#}
 
 #Resizing the serial terminal
-tty | grep -q "ttyS"
-if [[ $? -eq 0 ]]; then
-	rsz
-	export TERM=xterm-256color
-fi
+#tty | grep -q "ttyS"
+#if [[ $? -eq 0 ]]; then
+#	rsz
+#	export TERM=xterm-256color
+#fi
+
+# Fantastic cheat sheets
+cheat() {
+	curl cheat.sh/${1:-cheat};
+}
