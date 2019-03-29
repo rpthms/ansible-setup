@@ -47,7 +47,7 @@
 
 - name: Installing power-saving tools
   pacman:
-    name: [thermald, tlp, x86_energy_perf_policy]
+    name: [tlp, x86_energy_perf_policy]
     state: present
 
 - name: Installing KeePassXC
