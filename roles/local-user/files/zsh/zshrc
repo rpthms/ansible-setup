@@ -24,8 +24,8 @@ ZCONFDIR=~/.zsh/
 
 #Setting history configurations
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=2000
+HISTSIZE=10000
+SAVEHIST=20000
 #histfindnodups doesn't seem to be working!
 setopt appendhistory incappendhistory histignoredups histexpiredupsfirst histfindnodups histreduceblanks histignorespace histnostore
 
@@ -41,8 +41,14 @@ fi
 autoload -U colors && colors
 source $ZCONFDIR/zsh-prompt.zsh
 
+# Temporary function path
+#fpath=(~/Source/zsh-completions $fpath)
+
 #Setting completion support
 autoload -U compinit && compinit
+
+#Arrow-key driven interface for completion
+#zstyle ':completion:*' menu select
 
 #Persistent rehash (find new binaries immediately after installing packages)
 zstyle ':completion:*' rehash true
@@ -52,7 +58,7 @@ zstyle ':completion:*' rehash true
 #	path array. The path array automatically fills up
 #	the PATH parameter.
 typeset -U path
-path=($path ~/.local/bin)
+path=($path /sbin /usr/sbin ~/.local/bin)
 
 #Setting pkgfile's "command-not-found" handler
 if [[ -x /bin/pkgfile ]]; then
@@ -133,6 +139,9 @@ genpasswd() {
 	tr -dc "A-Za-z0-9_!@#$%^&*()-+=" < /dev/urandom | head -c ${l} | xargs
 }
 
+# Generate password using ansible
+alias apass="ansible localhost -m command -a \"/usr/bin/echo {{ lookup('password', '/dev/null length=8 chars=ascii_uppercase,digits') }}\""
+
 #Changing Default DNS
 #alias dc="sudo sh -c 'echo nameserver 8.8.8.8 > /etc/resolv.conf'"
 
@@ -170,3 +179,6 @@ genpasswd() {
 cheat() {
 	curl cheat.sh/${1:-cheat};
 }
+
+# Load up kubectl autocompletion
+source <(kubectl completion zsh)
