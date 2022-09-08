@@ -36,12 +36,11 @@
     enabled: yes
     state: started
 
-- name: Enabling thermald and tlp
+- name: Enabling tlp
   systemd:
     name: '{{ item }}' 
     enabled: yes
   with_items:
-    - thermald
     - tlp
     - tlp-sleep
 ...

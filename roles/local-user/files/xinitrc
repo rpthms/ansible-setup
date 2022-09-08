@@ -22,7 +22,7 @@ pgrep redshift &> /dev/null || redshift &> /dev/null &
 
 # exec gnome-session
 # exec i3
-exec startkde
+exec startplasma-x11
 # exec startxfce4
 # ...or the Window Manager of your choice
 

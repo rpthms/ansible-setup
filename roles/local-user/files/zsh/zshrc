@@ -185,5 +185,11 @@ cheat() {
 	curl cheat.sh/${1:-cheat};
 }
 
+# Make Perlbrew use ~/Source
+export PERLBREW_ROOT="/home/ronnie/Source/perl"
+
+#Sync package list with Arch mirror
+alias sam="/home/ronnie/Source/k8s-docker-images/archmirror/gen-repo-filters"
+
 # Load up kubectl autocompletion
 source <(kubectl completion zsh)

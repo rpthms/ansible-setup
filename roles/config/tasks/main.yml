@@ -46,4 +46,12 @@
       notify:
         - update initramfs
         - update lts initramfs
+
+- name: Copying modprobe.d config file for i915
+  copy:
+    src: i915.conf
+    dest: /etc/modprobe.d/i915.conf
+    owner: root
+    group: root
+    mode: 0644
 ...

@@ -1,4 +1,4 @@
 Host *
 	ControlMaster auto
 	ControlPath ~/.ssh/sockets/%r@%h-%p
-	ControlPersist 60
+	ControlPersist 30m

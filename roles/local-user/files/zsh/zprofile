@@ -1,4 +1,4 @@
 if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
-  XDG_SESSION_TYPE=wayland exec startplasmacompositor
+  XDG_SESSION_TYPE=wayland exec startplasma-wayland
   #exec startx
 fi

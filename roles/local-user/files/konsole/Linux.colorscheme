@@ -44,7 +44,7 @@ Color=101,94,0
 Color=255,255,84
 
 [Color4]
-Color=24,24,178
+Color=0,170,255
 
 [Color4Faint]
 Color=0,0,101
@@ -89,6 +89,8 @@ Color=101,101,101
 Color=255,255,255
 
 [General]
+Blur=false
+ColorRandomization=false
 Description=Colors-Default
-Opacity=0.8
+Opacity=0.89
 Wallpaper=
